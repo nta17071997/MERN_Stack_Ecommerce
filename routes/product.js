@@ -1,7 +1,18 @@
 const express = require('express');
 const router = express.Router();
 
-const { create, productById, read, remove, update } = require('../controllers/product');
+const {
+  create,
+  productById,
+  read,
+  remove,
+  update,
+  list,
+  litsRelated,
+  listCategories,
+  listbySearch,
+  photo,
+} = require('../controllers/product');
 const { authenticateJWT, isAuth, isAdmin } = require('../controllers/auth');
 
 const { userById } = require('../controllers/user');
@@ -30,6 +41,12 @@ router.put(
   isAdmin,
   update
 );
+
+router.get('/products', list);
+router.get('/products/related/:productId', listRelated);
+router.get('/products/categories', listCategories);
+router.post('/products/by/search', listbySearch);
+router.get('/products/photo/:productId', photo);
 
 router.param('userId', userById);
 router.param('productId', productById);
